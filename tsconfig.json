@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "lib": ["es2022"],
     "module": "commonjs",                     /* Concatenate and emit output to single file. */
     "outDir": "./lib",                        /* Redirect output structure to the directory. */
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true
   },
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "exclude": ["node_modules", "tests"]
 }
