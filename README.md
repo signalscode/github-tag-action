@@ -1,6 +1,6 @@
 # GitHub Tag Action
 
-A GitHub Action to automatically bump and tag master, on merge, with the latest SemVer formatted version. Works on any platform.
+A GitHub Action to automatically bump and tag main, on merge, with the latest SemVer formatted version. Works on any platform.
 
 ## Usage
 
@@ -9,7 +9,7 @@ name: Bump version
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
 
 #### Filter branches
 
-- **release_branches** _(optional)_ - Comma separated list of branches (JavaScript regular expression accepted) that will generate the release tags. Other branches and pull-requests generate versions postfixed with the commit hash and do not generate any repository tag. Examples: `master` or `.*` or `release.*,hotfix.*,master`... (default: `master,main`).
+- **release_branches** _(optional)_ - Comma separated list of branches (JavaScript regular expression accepted) that will generate the release tags. Other branches and pull-requests generate versions postfixed with the commit hash and do not generate any repository tag. Examples: `main` or `.*` or `release.*,hotfix.*,main`... (default: `master,main`).
 - **pre_release_branches** _(optional)_ - Comma separated list of branches (JavaScript regular expression accepted) that will generate the pre-release tags.
 
 #### Customize the tag
