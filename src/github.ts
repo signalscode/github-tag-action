@@ -30,11 +30,11 @@ export function getOctokitSingleton() {
 export async function listTags(
   shouldFetchAllTags = false,
   fetchedTags: Tag[] = [],
-  page = 1
+  page = 1,
 ): Promise<Tag[]> {
   const octokit = getOctokitSingleton();
 
-  const tags = await octokit.repos.listTags({
+  const tags = await octokit.rest.repos.listTags({
     ...context.repo,
     per_page: 100,
     page,
@@ -56,7 +56,7 @@ export async function compareCommits(baseRef: string, headRef: string) {
   const octokit = getOctokitSingleton();
   core.debug(`Comparing commits (${baseRef}...${headRef})`);
 
-  const commits = await octokit.repos.compareCommits({
+  const commits = await octokit.rest.repos.compareCommits({
     ...context.repo,
     base: baseRef,
     head: headRef,
@@ -68,15 +68,15 @@ export async function compareCommits(baseRef: string, headRef: string) {
 export async function createTag(
   newTag: string,
   createAnnotatedTag: boolean,
-  GITHUB_SHA: string
+  GITHUB_SHA: string,
 ) {
   const octokit = getOctokitSingleton();
   let annotatedTag:
-    | Await<ReturnType<typeof octokit.git.createTag>>
-    | undefined = undefined;
+    Await<ReturnType<typeof octokit.rest.git.createTag>> | undefined =
+    undefined;
   if (createAnnotatedTag) {
     core.debug(`Creating annotated tag.`);
-    annotatedTag = await octokit.git.createTag({
+    annotatedTag = await octokit.rest.git.createTag({
       ...context.repo,
       tag: newTag,
       message: newTag,
@@ -86,7 +86,7 @@ export async function createTag(
   }
 
   core.debug(`Pushing new tag to the repo.`);
-  await octokit.git.createRef({
+  await octokit.rest.git.createRef({
     ...context.repo,
     ref: `refs/tags/${newTag}`,
     sha: annotatedTag ? annotatedTag.data.sha : GITHUB_SHA,
